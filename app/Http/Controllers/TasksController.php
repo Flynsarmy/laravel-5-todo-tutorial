@@ -5,11 +5,16 @@ use Redirect;
 use App\Project;
 use App\Task;
 use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use Illuminate\Http\Request;
-
 class TasksController extends Controller {
+
+	protected $rules = [
+		'name' => ['required', 'min:3'],
+		'slug' => ['required'],
+		'description' => ['required'],
+	];
 
 	/**
 	 * Display a listing of the resource.
@@ -37,10 +42,13 @@ class TasksController extends Controller {
 	 * Store a newly created resource in storage.
 	 *
 	 * @param  \App\Project $project
+	 * @param \Illuminate\Http\Request $request
 	 * @return Response
 	 */
-	public function store(Project $project)
+	public function store(Project $project, Request $request)
 	{
+		$this->validate($request, $this->rules);
+
 		$input = Input::all();
 		$input['project_id'] = $project->id;
 		Task::create( $input );
@@ -77,10 +85,13 @@ class TasksController extends Controller {
 	 *
 	 * @param  \App\Project $project
 	 * @param  \App\Task    $task
+	 * @param \Illuminate\Http\Request $request
 	 * @return Response
 	 */
-	public function update(Project $project, Task $task)
+	public function update(Project $project, Task $task, Request $request)
 	{
+		$this->validate($request, $this->rules);
+
 		$input = array_except(Input::all(), '_method');
 		$task->update($input);
 
