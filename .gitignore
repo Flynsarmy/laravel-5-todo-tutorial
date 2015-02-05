@@ -1,0 +1,17 @@
+.env
+.idea
+.gitattributes
+_ide_helper.php
+artisan
+composer.lock
+gulpfile.js
+package.json
+phpspec.yml
+phpunit.xml
+server.php
+bootstrap
+public
+resources
+storage
+tests
+vendor
