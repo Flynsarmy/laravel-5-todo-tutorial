@@ -20,6 +20,10 @@ Route::get('/', 'WelcomeController@index');
 //	'password' => 'Auth\PasswordController',
 //]);
 
+// Provide controller methods with object instead of ID
+Route::model('tasks', 'Task');
+Route::model('projects', 'Project');
+
 Route::bind('tasks', function($value, $route) {
 	return App\Task::whereSlug($value)->first();
 });
