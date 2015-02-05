@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use Input;
+use Redirect;
 use App\Project;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -36,7 +38,10 @@ class ProjectsController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		$input = Input::all();
+		Project::create( $input );
+
+		return Redirect::route('projects.index')->with('message', 'Project created');
 	}
 
 	/**
@@ -69,7 +74,10 @@ class ProjectsController extends Controller {
 	 */
 	public function update(Project $project)
 	{
-		return view('projects.update', compact('project'));
+		$input = array_except(Input::all(), '_method');
+		$project->update($input);
+
+		return Redirect::route('projects.show', $project->slug)->with('message', 'Project updated.');
 	}
 
 	/**
@@ -80,7 +88,9 @@ class ProjectsController extends Controller {
 	 */
 	public function destroy(Project $project)
 	{
-		//
+		$project->delete();
+
+		return Redirect::route('projects.index')->with('message', 'Project deleted.');
 	}
 
 }

@@ -11,7 +11,8 @@ phpunit.xml
 server.php
 bootstrap
 public
-resources
+resources/assets
+resources/lang
 storage
 tests
 vendor
